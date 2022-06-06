@@ -1,5 +1,6 @@
 const User = require("../models/user");
 const { StatusCodes } = require("http-status-codes");
+const Img = require("../models/image");
 
 const register = async (req, res) => {
   try {
@@ -44,4 +45,9 @@ const upload = (req, res) => {
   res.send({ msg: "upload success" });
 };
 
-module.exports = { login, register, upload };
+const getAllImage = async (req, res) => {
+  const img = await Img.find();
+  res.send({ img });
+};
+
+module.exports = { login, register, upload, getAllImage };

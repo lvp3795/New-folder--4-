@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const multer = require("multer");
-const User = require("../models/user");
+const Img = require("../models/image");
 
 const storage = multer.diskStorage({
   destination: function (request, file, callback) {
@@ -20,12 +20,14 @@ const upload = multer({
   },
 });
 
-const { login, register } = require("../controllers/auth");
+const { login, register, getAllImage } = require("../controllers/auth");
 
 router.route("/register").post(register);
 router.route("/login").post(login);
+router.route("/getImg").get(getAllImage);
 router.post("/upload", upload.single("add-images"), async (req, res) => {
-  console.log(req.file);
+  console.log(req.file.filename);
+  const img = await Img.create({ img: req.file.filename });
   res.redirect("/");
 });
 

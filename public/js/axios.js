@@ -102,7 +102,7 @@ btnLogOut.addEventListener("click", async () => {
   localStorage.removeItem("role");
 });
 
-window.onload = (event) => {
+window.onload = async (event) => {
   if (
     localStorage.getItem("user") !== null &&
     localStorage.getItem("role") !== null
@@ -120,6 +120,13 @@ window.onload = (event) => {
       document.getElementById("add-images-button").style.display = "inline";
     } else {
       document.getElementById("add-images-button").style.display = "none";
+    }
+    const img = await axios.get("http://localhost:3000/api/getImg");
+    console.log(img.data);
+    for (let i = 0; i < img.data.img.length; i++) {
+      document.getElementById(
+        "image-container"
+      ).innerHTML += `<img src="/images/${img.data.img[i].img}" alt="">`;
     }
   } else {
     console.log("no");

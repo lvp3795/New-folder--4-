@@ -13,6 +13,7 @@ app.use(express.json());
 app.use("/api", auth);
 
 app.use(express.static("../public"));
+app.use("/images", express.static("./images"));
 
 const port = 3000;
 
